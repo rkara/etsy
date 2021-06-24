@@ -6,7 +6,38 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "etsy-client": {
+    "etsy": {
+      "projectType": "library",
+      "root": "projects/etsy",
+      "sourceRoot": "projects/etsy/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/etsy/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/etsy/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/etsy/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/etsy/src/test.ts",
+            "tsConfig": "projects/etsy/tsconfig.spec.json",
+            "karmaConfig": "projects/etsy/karma.conf.js"
+          }
+        }
+      }
+    },
+    "app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -16,25 +47,26 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/app",
+      "sourceRoot": "projects/app/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/etsy-client",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/app",
+            "index": "projects/app/src/index.html",
+            "main": "projects/app/src/main.ts",
+            "polyfills": "projects/app/src/polyfills.ts",
+            "tsConfig": "projects/app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/app/src/favicon.ico",
+              "projects/app/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "projects/app/src/styles.scss"
             ],
             "scripts": []
           },
@@ -54,8 +86,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "projects/app/src/environments/environment.ts",
+                  "with": "projects/app/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -75,10 +107,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "etsy-client:build:production"
+              "browserTarget": "app:build:production"
             },
             "development": {
-              "browserTarget": "etsy-client:build:development"
+              "browserTarget": "app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,23 +118,24 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "etsy-client:build"
+            "browserTarget": "app:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "projects/app/src/test.ts",
+            "polyfills": "projects/app/src/polyfills.ts",
+            "tsConfig": "projects/app/tsconfig.spec.json",
+            "karmaConfig": "projects/app/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "projects/app/src/favicon.ico",
+              "projects/app/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "projects/app/src/styles.scss"
             ],
             "scripts": []
           }
@@ -110,5 +143,5 @@
       }
     }
   },
-  "defaultProject": "etsy-client"
+  "defaultProject": "app"
 }

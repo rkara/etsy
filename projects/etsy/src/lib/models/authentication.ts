@@ -1,4 +1,4 @@
-export interface AppAuthenticationToken {
+export interface EtsyAuthToken {
   accessToken: string;
   tokenType: string;
   expiresIn: number;

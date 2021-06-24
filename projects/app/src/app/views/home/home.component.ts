@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AppAuthenticationService } from '../../shared/services/authentication.service';
+import { EtsyAuthenticationService } from '../../../../../etsy/src/lib/services/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { AppAuthenticationService } from '../../shared/services/authentication.s
   styleUrls: ['./home.component.scss'],
 })
 export class AppHomeComponent implements OnInit {
-  constructor(private auth: AppAuthenticationService) {}
+  constructor(private auth: EtsyAuthenticationService) {}
 
   ngOnInit() {}
 

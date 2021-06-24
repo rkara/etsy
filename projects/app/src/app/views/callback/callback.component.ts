@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AppAuthenticationService } from '../../shared/services/authentication.service';
+
+import { EtsyAuthenticationService } from '../../../../../etsy/src/lib/services/authentication.service';
 
 @Component({
   selector: 'app-callback',
@@ -10,7 +11,7 @@ import { AppAuthenticationService } from '../../shared/services/authentication.s
 export class AppCallbackComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
-  constructor(private auth: AppAuthenticationService) {}
+  constructor(private auth: EtsyAuthenticationService) {}
 
   ngOnInit(): void {
     this.subscriptions.add(this.auth.performCallback$().subscribe());

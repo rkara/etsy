@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
-import { AppAuthenticationToken } from '../models/authentication';
+import { EtsyAuthToken } from '../models/authentication';
+import { ETSY_KEYSTRING } from '../tokens/keystring';
 
 const SCOPE = 'address_r billing_r listings_r profile_r shops_r transactions_r';
 const GRANT_TYPE = 'authorization_code';
@@ -18,18 +18,21 @@ const STATE = 'APP_STATE';
 @Injectable({
   providedIn: 'root',
 })
-export class AppAuthenticationService {
+export class EtsyAuthenticationService {
   get accessToken$() {
     return this.accessTokenSubject.asObservable();
   }
 
   private state?: any;
   private authCode?: string;
-  private accessTokenSubject = new BehaviorSubject<
-    AppAuthenticationToken | undefined
-  >(undefined);
+  private accessTokenSubject = new BehaviorSubject<EtsyAuthToken | undefined>(
+    undefined
+  );
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(ETSY_KEYSTRING) private etsyKeystring: string,
+    private http: HttpClient
+  ) {}
 
   login() {
     this.initAuthenticationFlow();
@@ -90,7 +93,7 @@ export class AppAuthenticationService {
     localStorage.setItem(CODE, code);
   }
 
-  private getAccessToken$(): Observable<AppAuthenticationToken | undefined> {
+  private getAccessToken$(): Observable<EtsyAuthToken | undefined> {
     const uri = 'https://api.etsy.com/v3/public/oauth/token';
     const code = this.getAuthCode();
     const codeVerifier = localStorage.getItem(CODE_VERIFIER);
@@ -98,7 +101,7 @@ export class AppAuthenticationService {
     if (code && codeVerifier) {
       const params: any = {
         grant_type: GRANT_TYPE,
-        client_id: environment.keystring,
+        client_id: this.etsyKeystring,
         redirect_uri: REDIRECT_URI,
         code,
         code_verifier: codeVerifier,
@@ -122,7 +125,7 @@ export class AppAuthenticationService {
 
   private initAuthenticationFlow() {
     const responseType = 'code';
-    const clientId = environment.keystring;
+    const clientId = this.etsyKeystring;
     const redirectUri = REDIRECT_URI;
     const scope = SCOPE;
     const state = '{route: "test"}';

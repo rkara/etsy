@@ -1,7 +1,8 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AppAuthenticationService } from './shared/services/authentication.service';
+
+import { EtsyAuthenticationService } from '../../../etsy/src/lib/services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private auth: AppAuthenticationService) {}
+  constructor(private auth: EtsyAuthenticationService) {}
 
   ngOnInit() {
     this.subscriptions.add(
