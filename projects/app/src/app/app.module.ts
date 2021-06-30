@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppCallbackComponent } from './views/callback/callback.component';
 import { AppHomeComponent } from './views/home/home.component';
 import { environment } from '../environments/environment';
-import { ETSY_KEYSTRING } from 'projects/etsy/src/public-api';
+import { EtsyModule, ETSY_API, ETSY_KEYSTRING,  } from 'projects/etsy/src/public-api';
 import { AppSharedModule } from './shared/shared.module';
 
 
@@ -24,9 +24,14 @@ import { AppSharedModule } from './shared/shared.module';
     HttpClientModule,
     BrowserAnimationsModule,
     AppSharedModule,
+    EtsyModule,
   ],
   providers: [
-    { provide: ETSY_KEYSTRING, useValue: environment.keystring }
+    { provide: ETSY_KEYSTRING, useValue: environment.keystring },
+    {
+      useValue: 'http://localhost:3000/etsy',
+      provide: ETSY_API,
+    },
   ],
   bootstrap: [AppComponent]
 })

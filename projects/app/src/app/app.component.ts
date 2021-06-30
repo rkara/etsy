@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { EtsyAuthenticationService } from '../../../etsy/src/lib/services/authentication.service';
+import { EtsyAuthenticationService } from 'projects/etsy/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.add(
       this.auth.accessToken$.subscribe((accessToken) => {
-        debugger;
+        if (accessToken) {
+          debugger;
+        }
       })
     );
   }

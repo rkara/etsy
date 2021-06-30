@@ -1,3 +1,20 @@
-<p>home works!</p>
+<div class="home" fxFlexFill fxLayout="column">
+  <mat-card>
+    <mat-card-title>Home</mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="row" fxLayoutGap="10px">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="_onLoginButtonClick()"
+        >
+          Grant Access
+        </button>
 
-<input type="button" value="Test" (click)="_onLoginButtonClick()" />
+        <button mat-raised-button color="accent" (click)="_onApiTest()">
+          Test API Endpoint
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

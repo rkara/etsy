@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { EtsyAuthenticationService } from '../../../../../etsy/src/lib/services/authentication.service';
+import { EtsyAuthenticationService } from 'projects/etsy/src/public-api';
 
 @Component({
   selector: 'app-callback',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { EtsyAuthenticationService } from '../../../../../etsy/src/lib/services/authentication.service';
+import { EtsyAuthenticationService, EtsyUserService } from 'projects/etsy/src/public-api';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +8,17 @@ import { EtsyAuthenticationService } from '../../../../../etsy/src/lib/services/
   styleUrls: ['./home.component.scss'],
 })
 export class AppHomeComponent implements OnInit {
-  constructor(private auth: EtsyAuthenticationService) {}
+  constructor(private auth: EtsyAuthenticationService, private userService: EtsyUserService) {}
 
   ngOnInit() {}
 
   _onLoginButtonClick() {
     this.auth.login();
+  }
+
+  _onApiTest() {
+    this.userService.getUser$(4369).subscribe(res => {
+      debugger;
+    })
   }
 }

@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { EtsyAuthToken } from '../models/authentication';
 import { ETSY_KEYSTRING } from '../tokens/keystring';
+import { ETSY_API } from '../tokens/api';
 
 const SCOPE = 'address_r billing_r listings_r profile_r shops_r transactions_r';
 const GRANT_TYPE = 'authorization_code';
@@ -31,6 +32,7 @@ export class EtsyAuthenticationService {
 
   constructor(
     @Inject(ETSY_KEYSTRING) private etsyKeystring: string,
+    @Inject(ETSY_API) private api: string,
     private http: HttpClient
   ) {}
 
@@ -94,7 +96,7 @@ export class EtsyAuthenticationService {
   }
 
   private getAccessToken$(): Observable<EtsyAuthToken | undefined> {
-    const uri = 'https://api.etsy.com/v3/public/oauth/token';
+    const uri = `${this.api}/public/oauth/token`;
     const code = this.getAuthCode();
     const codeVerifier = localStorage.getItem(CODE_VERIFIER);
 
